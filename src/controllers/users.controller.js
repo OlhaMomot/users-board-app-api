@@ -1,14 +1,12 @@
-import { ControllerAction } from '../types';
+const UserService = require('../services/users.service.js');
 
-const UserService = require('../services/users.service');
-
-const getAll: ControllerAction = (req, res) => {
+const getAll = (req, res) => {
   const users = UserService.getAll();
 
   res.send(users);
 }; 
 
-const create: ControllerAction = (req, res) => {
+const create = (req, res) => {
   const { name, carColorId } = req.query;
 
   if (typeof name !== 'string'
@@ -24,7 +22,7 @@ const create: ControllerAction = (req, res) => {
   res.send(newUser);
 };
 
-const getById: ControllerAction = (req, res) => {
+const getById = (req, res) => {
   const { userId } = req.params;
 
   const user = UserService.getById(+userId);

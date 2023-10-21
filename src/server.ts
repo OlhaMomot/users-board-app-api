@@ -1,10 +1,9 @@
-import { Request, Response } from 'express';
-
 const express = require('express');
+
 const cors = require('cors');
 const UserController = require('./controllers/users.controller');
 
-const PORT = 443;
+const PORT = 5000;
 const CLIENT_ORIGIN = 'http://localhost:3000/';
 const app = express();
 
@@ -22,7 +21,7 @@ const colors = [
   { id: 7, name: 'Yellow' },
 ];
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/', (req, res) => {
     res.end('Hello!');
 });
 
@@ -32,7 +31,7 @@ app.post('/users', UserController.create);
 
 app.get('/users/:userId', UserController.getById);
 
-app.get('/colors', (req: Request, res: Response) => {
+app.get('/colors', (req, res) => {
   res.send(colors);
 });
 
