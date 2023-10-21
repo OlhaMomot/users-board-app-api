@@ -1,5 +1,8 @@
+import { Request, Response } from 'express';
+
 const express = require('express');
 const cors = require('cors');
+const UserController = require('./controllers/users.controller');
 
 const PORT = 443;
 const CLIENT_ORIGIN = 'http://localhost:3000/';
@@ -8,12 +11,6 @@ const app = express();
 app.use(cors({
   origin: CLIENT_ORIGIN,
 }));
-
-const users = [
-  { id: 1, name: 'Joe Biden', carColorId: 5 },
-  { id: 2, name: 'Elon Musk', carColorId: 4 },
-  { id: 3, name: 'Pan Roman', carColorId: 2 },
-];
 
 const colors = [
   { id: 1, name: 'Black' },
@@ -25,29 +22,17 @@ const colors = [
   { id: 7, name: 'Yellow' },
 ];
 
-app.get('/', (req, res) => {
+app.get('/', (req: Request, res: Response) => {
     res.end('Hello!');
 });
 
-app.get('/users', (req, res) => {
-  res.send(users);
-});
+app.get('/users', UserController.getAll);
 
-app.get('/users/:userId', (req, res) => {
-  const { userId } = req.params;
+app.post('/users', UserController.create);
 
-  const user = users.find(({ id }) => id === +userId);
+app.get('/users/:userId', UserController.getById);
 
-  if (!user) {
-    res.sendStatus(404);
-
-    return;
-  }
-
-  res.send(user);
-});
-
-app.get('/colors', (req, res) => {
+app.get('/colors', (req: Request, res: Response) => {
   res.send(colors);
 });
 
